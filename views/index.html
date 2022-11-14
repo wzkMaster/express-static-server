@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    a:hover {
+      color: rgb(234, 116, 35)
+    }
+
+    .container {
+      border: 1px solid gray;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px;
+    }
+
+    h3 {
+      margin: 15px 0;
+    }
+
+    h2 {
+      cursor: pointer;
+    }
+
+    .links {
+      display: none;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <% for( let name of names ) { %>
+    <div class="container">
+      <h2>
+        <%= name %>
+      </h2>
+      <div class="links">
+        <% for( let file of tree[name] ) { %>
+          <% if (typeof file==='object' ) { %>
+            <h3>
+              <%= Object.keys(file)[0] %>
+            </h3>
+            <% for( let f of Object.values(file)[0] ) { %>
+              <a href="<%=`极客时间/${name}/${Object.keys(file)[0]}/${f}`%>" target="_blank">
+                <%= f.slice(0, -5) %>
+              </a>
+              <% } %>
+                <% } else { %>
+                  <a href="<%=`极客时间/${name}/${file}` %>" target="_blank">
+                    <%= file.slice(0, -5) %>
+                  </a>
+                  <% } %>
+
+                    <% } %>
+      </div>
+    </div>
+    <% } %>
+
+      <script>
+        const cs = document.querySelectorAll('.container')
+        Array.from(cs).forEach(c => {
+          c.addEventListener('click', (e) => {
+            const links = c.querySelector('.links');
+            if (links.style.display === 'block') {
+              links.style.display = 'none';
+            } else {
+              links.style.display = 'block';
+            }
+          })
+        });
+      </script>
+</body>
+
+</html>
